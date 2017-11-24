@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 06:27:19 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 03:30:42 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/11/24 09:32:59 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@
 struct termios	base_termios;
 struct winsize	base_winsize;
 
-static void	print_script_info(t_script_info *info)
-{
-	uint32_t	i;
-	printf("filescript: %s\nflush_time: %ld\n", info->file_script, info->flush_time);
+/* static void	print_script_info(t_script_info *info) */
+/* { */
+/* 	uint32_t	i; */
+/* 	printf("filescript: %s\nflush_time: %ld\n", info->file_script, info->flush_time); */
 
-	i = 0;
-	while (i < 8)
-	{
-		printf("%c: %u\n", (SCRIPT_FLAGS[i]), !!(info->flags.flags & (1U << i)));
-		i++;
-	}
-}
+/* 	i = 0; */
+/* 	while (i < 8) */
+/* 	{ */
+/* 		printf("%c: %u\n", (SCRIPT_FLAGS[i]), !!(info->flags.flags & (1U << i))); */
+/* 		i++; */
+/* 	} */
+/* } */
 
 int	main(int argc, char **argv, char **env)
 {
@@ -43,10 +43,8 @@ int	main(int argc, char **argv, char **env)
 
 	ft_get_term_info();
 	script_info = ft_parse_args(argc, argv, env);
-	print_script_info(script_info);
 	if (-1 == (master_fd = open(PTMX_FILENAME, O_RDWR | O_NOCTTY)))
 		_exit(EXIT_FAILURE);
-	printf("master_fd : %d\n", master_fd);
 	if (grantpt(master_fd) || unlockpt(master_fd))
 	{
 		perror(NULL); // to remove
@@ -57,15 +55,15 @@ int	main(int argc, char **argv, char **env)
 		perror(NULL);
 		exit(EXIT_FAILURE);
 	}
-	printf("slave_name: %s\n", slave_name);
-
+//	print_script_info(script_info);
 	if (-1 == (pid = get_slave_fork(slave_name, master_fd)))
 		_exit(EXIT_FAILURE);
 	else if (pid)
 	{
 		typescript_fd = open_typescript_file(script_info);
+		print_script_start(typescript_fd, script_info);
 		set_master_termios(master_fd);
-		master_routine(master_fd, pid, typescript_fd); // please set a serious open
+		master_routine(master_fd, pid, typescript_fd, script_info);
 	}
 	else
 		exec_shell(env);

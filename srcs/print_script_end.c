@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_typescript_file.c                             :+:      :+:    :+:   */
+/*   print_script_end.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:25:13 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 06:45:47 by sclolus          ###   ########.fr       */
+/*   Created: 2017/11/24 09:34:50 by sclolus           #+#    #+#             */
+/*   Updated: 2017/11/24 09:48:23 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_script.h"
 
-inline int	open_typescript_file(const t_script_info *info)
+inline void	print_script_end(int typescript_fd, t_script_info *info)
 {
-	int	fd;
+	struct timeval	time;
+	char			*time_str;
 
-	fd = open(info->file_script, O_WRONLY | O_CREAT
-			| (info->flags.bits.append ? O_APPEND : O_TRUNC)
-			, S_IRUSR | S_IWUSR | S_IWGRP | S_IWOTH);
-	// chmod ? open create mode flags seems
-	if (fd == -1)
+	gettimeofday(&time, NULL);
+	if (!(time_str = ctime(&time.tv_sec)))
 	{
-		ft_error(1, (char*[]){"Could not open typescript file"}, 0); // change this to check which error
+		ft_error(1, (char*[]){"Failed to gettimeofday()"}, 0);
 		_exit(EXIT_FAILURE);
 	}
-	return (fd);
+	ft_putchar_fd('\n', typescript_fd);
+	ft_putstr_fd(SCRIPT_END_FILE, typescript_fd);
+	ft_putstr_fd(time_str, typescript_fd);
+	ft_putstr(SCRIPT_END_STDOUT);
+	ft_putstr(info->file_script);
+	ft_putchar('\n');
 }

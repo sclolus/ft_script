@@ -22,7 +22,9 @@ SRC= srcs/main.c \
 	srcs/parsing/ft_play_back_flag_callback.c \
 	srcs/parsing/ft_quiet_flag_callback.c \
 	srcs/parsing/ft_timestamp_flag_callback.c \
-	srcs/open_typescript_file.c
+	srcs/open_typescript_file.c \
+	srcs/print_script_start.c \
+	srcs/print_script_end.c
 
 OBJ= $(SRC:.c=.o)
 HDR_PATH= ./libft/includes/

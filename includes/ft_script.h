@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 06:27:37 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 03:30:06 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/11/24 09:48:32 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <sys/ioctl.h>
 # include <sys/termios.h>
+# include <time.h>
+# include <sys/time.h>
 
 # include <stdio.h> // to remove
 
@@ -31,7 +33,7 @@ typedef struct	s_bits16
 	uint16_t	append : 1;
 	uint16_t	no_sleep : 1;
 	uint16_t	pipe : 1;
-	uint16_t	keylog : 1;
+ 	uint16_t	keylog : 1;
 	uint16_t	play_back : 1;
 	uint16_t	quiet : 1;
 	uint16_t	timestamp : 1;
@@ -89,7 +91,15 @@ void		ft_get_term_info(void);
 int			set_master_termios(int master_fd);
 int			open_typescript_file(const t_script_info *info);
 
-NORETURN	master_routine(int master_fd, pid_t slave_pid, int typescript_fd);
+NORETURN	master_routine(int master_fd, pid_t slave_pid, int typescript_fd, t_script_info *info);
+
+# define SCRIPT_START_FILE "Script started on "
+# define SCRIPT_END_FILE "Script done on "
+# define SCRIPT_START_STDOUT "Script started, output file is "
+# define SCRIPT_END_STDOUT "\nScript done, output file is "
+
+void		print_script_start(int typescript_fd, t_script_info *info);
+void		print_script_end(int typescript_fd, t_script_info *info);
 
 /*
 ** Slave side
@@ -111,6 +121,7 @@ void	exec_shell(char **env);
 # define SCRIPT_USAGE "usage: script [-adkpqr] [-t time] [file [command ...]]"
 
 void			print_usage(void);
-NORETURN		cleanup_exit(int exit_status);
+NORETURN		cleanup_exit(int exit_status, int typescript_fd
+							, t_script_info *info);
 void			reset_tty(void);
 #endif
