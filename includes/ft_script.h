@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 06:27:37 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 09:48:32 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/11/24 11:24:12 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/termios.h>
 # include <time.h>
 # include <sys/time.h>
+# include <sys/stat.h>
 
 # include <stdio.h> // to remove
 
