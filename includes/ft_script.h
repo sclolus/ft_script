@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 06:27:37 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 11:24:12 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/01 17:27:14 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define SCRIPT_FLAGS "adFkpqrt"
 # define SCRIPT_FLAGS_GETOPT "adF:kpqrt:"
 # define DFL_SCRIPT_FILE "typescript"
+# define DFL_SCRIPT_FLUSH_TIME 30
 
 typedef struct	s_bits16
 {

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:35:25 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 01:02:04 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/01 22:31:00 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_implode_strings(char **strings);
 int				ft_atoi(const char *str);
-int64_t			ft_atol(const char *str);
+uint64_t		ft_atol(const char *str);
 int				ft_toupper(int c);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -141,6 +141,8 @@ unsigned long	ft_pow(int nbr, unsigned int exponent);
 
 void			ft_print_page(void *addr);
 uint32_t		ft_static_put(char *str, uint32_t len, uint32_t flags);
+uint32_t		ft_static_put_fd(char *str, uint32_t len, uint32_t flags
+								, int fd);
 unsigned int	ft_strchr_index(char *str, char c);
 
 unsigned int	ft_log2(unsigned long long nbr);

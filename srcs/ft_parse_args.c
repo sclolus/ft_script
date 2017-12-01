@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 13:59:11 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/24 03:27:07 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/01 17:27:02 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_script_info	*ft_parse_args(int argc, char **argv, char **env)
 	char							retrieved_opt;
 
 	script_info.file_script = DFL_SCRIPT_FILE;
+	script_info.flush_time = DFL_SCRIPT_FLUSH_TIME;
 	while ((retrieved_opt = (char)ft_getopt(argc, argv, SCRIPT_FLAGS_GETOPT)) != -1)
 	{
 		if (retrieved_opt == GETOPT_ERR_CHAR)
