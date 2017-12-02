@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 09:32:26 by sclolus           #+#    #+#             */
-/*   Updated: 2017/12/01 22:41:46 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/01 23:54:00 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ static uint32_t	time_scheduler(t_script_info *info)
 	return (0);
 }
 
+/*
+** This routine reads on STDIN and send the rend data onto the slave device's stdin
+*/
+
 static void	master_stdin_read_routine(t_script_info *info, int typescript_fd, int master_fd)
 {
 	static char	read_buffer[4096];
@@ -43,6 +47,11 @@ static void	master_stdin_read_routine(t_script_info *info, int typescript_fd, in
 	if (info->flags.bits.keylog)
 		ft_static_put_fd(read_buffer, (uint32_t)len, 0, typescript_fd);
 }
+
+/*
+** This routine writes the data send from the slave device in the filescript
+** file and print it on screen (or redirect file of the utility)
+*/
 
 static void	master_typescript_write_routine(t_script_info *info, int typescript_fd, int master_fd)
 {
@@ -63,7 +72,8 @@ static void	master_typescript_write_routine(t_script_info *info, int typescript_
 ** typescript_fd is the fd of the opened file use to record session
 */
 
-NORETURN	master_routine(int master_fd, pid_t slave_pid, int typescript_fd, t_script_info *info)
+NORETURN	master_routine(int master_fd, pid_t slave_pid, int typescript_fd
+							, t_script_info *info)
 {
 	fd_set			in_fds;
 	int				ndfs;
@@ -75,7 +85,8 @@ NORETURN	master_routine(int master_fd, pid_t slave_pid, int typescript_fd, t_scr
 		FD_ZERO(&in_fds);
 		FD_SET(master_fd, &in_fds);
 		FD_SET(STDIN_FILENO, &in_fds);
-		if (-1 == select(master_fd + 1, &in_fds, NULL, NULL, &(struct timeval){0, 200}))
+		if (-1 == select(master_fd + 1, &in_fds, NULL, NULL
+						, &(struct timeval){0, 10}))
 		{
 			ft_error(1, (char*[]){"select() failed"}, 0);
 			cleanup_exit(EXIT_FAILURE, typescript_fd, info);

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 06:27:37 by sclolus           #+#    #+#             */
-/*   Updated: 2017/12/01 17:27:14 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/02 00:36:58 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		print_script_end(int typescript_fd, t_script_info *info);
 # define BOURNE_SHELL_DEFAULT_PATH "/bin/sh"
 
 pid_t	get_slave_fork(const char *slave_name, int master_fd);
-void	exec_shell(char **env);
+void	exec_shell(t_script_info *info, char **env);
 
 # define PTMX_FILENAME "/dev/ptmx"
 

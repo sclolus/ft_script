@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 08:05:15 by sclolus           #+#    #+#             */
-/*   Updated: 2017/11/21 08:45:20 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/12/02 00:44:15 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,19 @@ static char *find_shell_path(char **env)
 	return (NULL);
 }
 
-void	exec_shell(char **env)
+void	exec_shell(t_script_info *info, char **env)
 {
 	char	*path;
 
+	//	env = add_script_to_env(env);
 	if (!(path = find_shell_path(env)))
 		path = BOURNE_SHELL_DEFAULT_PATH;
-//	env = add_script_to_env(env);
+	if (info->command_argv && -1 == (execve(info->command_argv[0]
+								, info->command_argv, env)))
+	{
+		ft_error(1, (char*[]){"execve() failed to exec forked shell"}, 0);
+		exit(EXIT_FAILURE);
+	}
 	if (-1 == (execve(path, (char*[]){path, NULL}, env)))
 	{
 		ft_error(1, (char*[]){"execve() failed to exec forked shell"}, 0);
